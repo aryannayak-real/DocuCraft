@@ -1,0 +1,6 @@
+{
+  "name": "DocuCraft - Online PDF Utilities & Converter",
+  "description": "Fast, private, browser-first PDF suite to merge, split, organize, rotate, watermark, compress, convert, and run OCR completely client-side.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

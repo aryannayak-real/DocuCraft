@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color-scheme: light;
+  --brand-color: #E5322D;
+  --brand-hover: #D02420;
+  --brand-light: #FEECEB;
+  --brand-muted: #FCA5A5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F8FAFC;
+  color: #0F172A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Brand utility classes */
+.bg-brand {
+  background-color: #E5322D;
+}
+
+.hover\:bg-brand-hover:hover {
+  background-color: #D02420;
+}
+
+.text-brand {
+  color: #E5322D;
+}
+
+.border-brand {
+  border-color: #E5322D;
+}
+
+.bg-brand-light {
+  background-color: #FEECEB;
+}
+
+.ring-brand:focus {
+  --tw-ring-color: rgba(229, 50, 45, 0.3);
+}
