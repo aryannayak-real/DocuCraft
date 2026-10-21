@@ -20,11 +20,16 @@ interface PageItem {
   thumbnailUrl: string;
 }
 
+interface DeletedPageRecord {
+  page: PageItem;
+  index: number;
+}
+
 export const OrganizeTool: React.FC<OrganizeToolProps> = ({ tool, onBack, initialFiles = [] }) => {
   const [file, setFile] = useState<UploadedFile | null>(initialFiles[0] || null);
   const [pages, setPages] = useState<PageItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [deletedPagesHistory, setDeletedPagesHistory] = useState<PageItem[]>([]);
+  const [deletedPagesHistory, setDeletedPagesHistory] = useState<DeletedPageRecord[]>([]);
   const [processingState, setProcessingState] = useState<ProcessingState>({
     status: 'idle',
     progress: 0,
@@ -32,6 +37,7 @@ export const OrganizeTool: React.FC<OrganizeToolProps> = ({ tool, onBack, initia
   });
 
   useEffect(() => {
+    setDeletedPagesHistory([]);
     if (!file) {
       setPages([]);
       return;
@@ -79,16 +85,25 @@ export const OrganizeTool: React.FC<OrganizeToolProps> = ({ tool, onBack, initia
       alert('You cannot delete all pages. The document must have at least one page.');
       return;
     }
+
     const item = pages[index];
-    setDeletedPagesHistory((prev) => [...prev, item]);
+    if (!item) return;
+
+    setDeletedPagesHistory((prev) => [...prev, { page: item, index }]);
     setPages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleUndoDelete = () => {
     if (deletedPagesHistory.length === 0) return;
+
     const lastDeleted = deletedPagesHistory[deletedPagesHistory.length - 1];
     setDeletedPagesHistory((prev) => prev.slice(0, -1));
-    setPages((prev) => [...prev, lastDeleted]);
+    setPages((prev) => {
+      const restored = [...prev];
+      const insertAt = Math.min(lastDeleted.index, restored.length);
+      restored.splice(insertAt, 0, lastDeleted.page);
+      return restored;
+    });
   };
 
   const handleRotatePage = (index: number) => {
